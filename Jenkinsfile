@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Test Python') {
             steps {
-                bat '"C:\\Users\\SHASHANK\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe" --version'
+                "C:\\Users\\SHASHANK\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe" --version
             }
         }
     }
