@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = "C:\\Users\\SHASHANK\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,20 +14,21 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat '"C:\\Users\\SHASHANK\\AppData\\Local\\Programs\\Python\\Python39\\python.exe" -m pip install pytest'
+                bat "\"${env.PYTHON}\" -m pip install pytest"
             }
         }
 
         stage('Unit Tests') {
             steps {
-                bat '"C:\\Users\\SHASHANK\\AppData\\Local\\Programs\\Python\\Python39\\python.exe" -m pytest --junitxml=test-results/results.xml'
+                bat "mkdir test-results || exit 0"
+                bat "\"${env.PYTHON}\" -m pytest --junitxml=test-results/results.xml"
             }
         }
 
         stage('Run Sensor Analysis') {
             steps {
                 dir('src') {
-                    bat '"C:\\Users\\SHASHANK\\AppData\\Local\\Programs\\Python\\Python39\\python.exe" analyze.py'
+                    bat "\"${env.PYTHON}\" analyze.py"
                 }
             }
         }
